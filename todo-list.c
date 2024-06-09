@@ -9,6 +9,7 @@ int count=1;
 typedef struct node {
   char objective[MAX];
   int num;
+  int status;
   struct node *next;
 }node;
 
@@ -16,6 +17,7 @@ void new_task(node **list);
 void print_all(node *list);
 void releasing(node *list);
 void remove_task(node **list);
+void update_status(node *list);
 
 int main() {
 
@@ -25,7 +27,8 @@ int main() {
   printf("1.To add your tasks.\n");
   printf("2.To display all your tasks.\n");
   printf("3.To remove a tasks.\n");
-  printf("4.To exit.\n");
+  printf("4.To mark a task completed.\n");
+  printf("5.To exit.\n");
  
   while (1) {
     printf("\nnumber>> ");
@@ -43,6 +46,9 @@ int main() {
         remove_task(&head);
         break;
       case 4:
+        update_status(head);
+        break;
+      case 5:
         releasing(head);
         exit(0);
       default:
@@ -64,9 +70,10 @@ void new_task(node **list) {
   fgets(new->objective,MAX,stdin);
   new->objective[strcspn(new->objective,"\n")]='\0';
 
-  new->num=count;
+  new->num = count;
   count++;
-  new->next=NULL;
+  new->status = 0;
+  new->next = NULL;
   
   if (*list == NULL) {
     *list=new;
@@ -90,7 +97,7 @@ void print_all(node *list) {
   }
   node *chad=list;
   while (chad != NULL) {
-    printf("%d.%s\n",chad->num,chad->objective);
+    printf("%d. [%c] %s\n",chad->num,chad->status == 0?'X':'O',chad->objective);
     chad=chad->next;
   }
 }
@@ -146,5 +153,24 @@ void remove_task(node **list) {
     }
  }
   printf("task number %d, deleted succesfully.\n",choice);
+}
+
+void update_status(node *list) {
+  int user_choice;
+  printf("enter task number, ");
+  scanf("%d",&user_choice);
+
+  node *chad = list;
+  while (chad->num != user_choice && chad->next != NULL) {
+    printf("%d\n",chad->num);
+    chad=chad->next;
+  }
+
+  if (chad->next == NULL) {
+    printf("%d task not found.\n",user_choice);
+    return;
+  }
+
+  chad->status = 1;
 }
 
