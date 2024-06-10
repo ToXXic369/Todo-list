@@ -36,10 +36,10 @@ int main() {
       scanf("%d",&operation);
       getchar();
 
-      if (operation > count || operation < 0) {
+      if (operation == '\n' || operation < 0) {
         printf("please enter a valid task number\n");
       }
-    }
+    } while (operation == '\n' || operation < 0);
 
     switch (operation) {
       case 1:
@@ -118,8 +118,12 @@ void releasing(node *list) {
 }
 
 void remove_task(node **list) {
-  int choice;
+  if (*list ==NULL) {
+    printf("list is empty, nothing to delete.\n");
+    return;
+  }
 
+  int choice;
   do {
     printf("which task you wanna delete? ");
     scanf("%d",&choice);
@@ -166,20 +170,31 @@ void remove_task(node **list) {
 }
 
 void update_status(node *list) {
+  
+  if (list ==NULL) {
+    printf("Try adding tasks, befour completing them.\n");
+    return;
+  }
+
   int user_choice;
   do {
     printf("which task did you complete? ");
     scanf("%d",&user_choice);
     getchar();
 
-    if (user_choice > count || user_choice < 0) {
+    if (user_choice > count || user_choice <= 0) {
       printf("please enter a valid task number\n");
     }
+  } while (user_choice > count || user_choice <= 0);
+
+  if (list->num == user_choice) {
+  list->status = 1;
+  printf("updated %d task to completed.\n",user_choice);
+    return;
   }
 
   node *chad = list;
   while (chad->num != user_choice && chad->next != NULL) {
-    printf("%d\n",chad->num);
     chad=chad->next;
   }
 
@@ -189,6 +204,6 @@ void update_status(node *list) {
   }
 
   chad->status = 1;
-  printf("updated %d task to completed.\n");
+  printf("updated %d task to completed.\n",user_choice);
 }
 
