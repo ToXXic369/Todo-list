@@ -102,9 +102,10 @@ void print_all(node *list) {
     printf("nothing to display, try adding tasks first.\n");
     return;
   }
+  printf("No. Status  Tasks\n");
   node *chad=list;
   while (chad != NULL) {
-    printf("%d. [%c] %s\n",chad->num,chad->status == 0?'X':'O',chad->objective);
+    printf("%d.  [%c]     %s\n",chad->num,chad->status == 0?'X':'O',chad->objective);
     chad=chad->next;
   }
 }
