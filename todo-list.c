@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX 100
+#define MAX 255
 
 int count=1;
 
@@ -24,16 +24,22 @@ int main() {
   node *head=NULL;
   int operation;
 
-  printf("1.To add your tasks.\n");
-  printf("2.To display all your tasks.\n");
-  printf("3.To remove a tasks.\n");
-  printf("4.To mark a task completed.\n");
-  printf("5.To exit.\n");
+  printf("[1] To add your tasks.\n");
+  printf("[2] To display all your tasks.\n");
+  printf("[3] To remove a tasks.\n");
+  printf("[4] To mark a task completed.\n");
+  printf("[5] To exit.\n");
  
   while (1) {
-    printf("\nnumber>> ");
-    scanf("%d",&operation);
-    getchar();
+    do {
+      printf("\nnumber>> ");
+      scanf("%d",&operation);
+      getchar();
+
+      if (operation > count || operation < 0) {
+        printf("please enter a valid task number\n");
+      }
+    }
 
     switch (operation) {
       case 1:
@@ -66,7 +72,7 @@ void new_task(node **list) {
     return;
   }
 
-  printf("enter task, ");
+  printf("task to be added, ");
   fgets(new->objective,MAX,stdin);
   new->objective[strcspn(new->objective,"\n")]='\0';
 
@@ -77,6 +83,7 @@ void new_task(node **list) {
   
   if (*list == NULL) {
     *list=new;
+    printf("added succesfully :)\n");
     return;
   }
   else {
@@ -112,9 +119,16 @@ void releasing(node *list) {
 
 void remove_task(node **list) {
   int choice;
-  printf("which task you wanna delete? ");
-  scanf("%d",&choice);
-  getchar();
+
+  do {
+    printf("which task you wanna delete? ");
+    scanf("%d",&choice);
+    getchar();
+
+    if (choice > count || choice < 0) {
+      printf("please enter a valid task number.\n");
+    }
+  } while(choice > count || choice < 0);
 
   node *next=*list;
   node *prev=NULL;
@@ -125,9 +139,7 @@ void remove_task(node **list) {
     free(next);
     node *temp=*list;
     while(temp != NULL) {
-      printf("befour: %d\n",temp->num);
       temp->num -= 1;
-      printf("after: %d\n",temp->num);
       temp=temp->next;
     }
   } else {
@@ -137,7 +149,7 @@ void remove_task(node **list) {
     }
 
     if (next == NULL) {
-      printf("nothing to delete.\n");
+      printf("%d task not found.\n",choice);
       return;
     }
 
@@ -146,9 +158,7 @@ void remove_task(node **list) {
     prev=prev->next;
 
     while(prev != NULL) {
-      printf("befour: %d\n",prev->num);
       prev->num -= 1;
-      printf("after: %d\n",prev->num);
       prev=prev->next;
     }
  }
@@ -157,8 +167,15 @@ void remove_task(node **list) {
 
 void update_status(node *list) {
   int user_choice;
-  printf("enter task number, ");
-  scanf("%d",&user_choice);
+  do {
+    printf("which task did you complete? ");
+    scanf("%d",&user_choice);
+    getchar();
+
+    if (user_choice > count || user_choice < 0) {
+      printf("please enter a valid task number\n");
+    }
+  }
 
   node *chad = list;
   while (chad->num != user_choice && chad->next != NULL) {
@@ -172,5 +189,6 @@ void update_status(node *list) {
   }
 
   chad->status = 1;
+  printf("updated %d task to completed.\n");
 }
 
