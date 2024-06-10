@@ -24,6 +24,11 @@ int main() {
   node *head=NULL;
   int operation;
 
+  printf("\n                     ~~~~~~~~~~~\n");
+  printf("                      TODO-LIST\n");
+  printf("                     ~~~~~~~~~~~\n");
+
+  printf("\nOperations:\n\n");
   printf("[1] To add your tasks.\n");
   printf("[2] To display all your tasks.\n");
   printf("[3] To remove a tasks.\n");
