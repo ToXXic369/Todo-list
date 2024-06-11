@@ -34,6 +34,7 @@ int main() {
   printf("[3] To remove a tasks.\n");
   printf("[4] To mark a task completed.\n");
   printf("[5] To exit.\n");
+  printf("\ntip: you can even combine operations, just include space between them\n");
  
   while (1) {
     do {
@@ -110,7 +111,7 @@ void print_all(node *list) {
   printf("No. Status  Tasks\n");
   node *chad=list;
   while (chad != NULL) {
-    printf("%d.  [%c]     %s\n",chad->num,chad->status == 0?'X':'O',chad->objective);
+    printf("%d.  [%s]     %s\n",chad->num,chad->status == 0?"x":"✓",chad->objective);
     chad=chad->next;
   }
 }
@@ -177,7 +178,7 @@ void remove_task(node **list) {
 
 void update_status(node *list) {
   
-  if (list ==NULL) {
+  if (list == NULL) {
     printf("Try adding tasks, befour completing them.\n");
     return;
   }
@@ -204,7 +205,7 @@ void update_status(node *list) {
     chad=chad->next;
   }
 
-  if (chad->next == NULL) {
+  if (chad == NULL) {
     printf("%d task not found.\n",user_choice);
     return;
   }
