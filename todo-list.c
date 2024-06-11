@@ -89,7 +89,7 @@ void new_task(node **list) {
   
   if (*list == NULL) {
     *list=new;
-    printf("added succesfully :)\n");
+    printf("\nadded succesfully :)\n");
     return;
   }
   else {
@@ -100,7 +100,7 @@ void new_task(node **list) {
     last->next = new;
   }
 
-  printf("added succesfully :)\n");
+  printf("\nadded succesfully :)\n");
 }
 
 void print_all(node *list) {
@@ -108,7 +108,7 @@ void print_all(node *list) {
     printf("nothing to display, try adding tasks first.\n");
     return;
   }
-  printf("No. Status  Tasks\n");
+  printf("\nNo. Status  Tasks\n");
   node *chad=list;
   while (chad != NULL) {
     printf("%d.  [%s]     %s\n",chad->num,chad->status == 0?"x":"✓",chad->objective);
@@ -137,7 +137,7 @@ void remove_task(node **list) {
     getchar();
 
     if (choice > count || choice < 0) {
-      printf("please enter a valid task number.\n");
+      printf("\nplease enter a valid task number.\n");
     }
   } while(choice > count || choice < 0);
 
@@ -173,7 +173,7 @@ void remove_task(node **list) {
       prev=prev->next;
     }
  }
-  printf("task number %d, deleted succesfully.\n",choice);
+  printf("\ntask number %d, deleted succesfully.\n",choice);
 }
 
 void update_status(node *list) {
@@ -190,13 +190,13 @@ void update_status(node *list) {
     getchar();
 
     if (user_choice > count || user_choice <= 0) {
-      printf("please enter a valid task number\n");
+      printf("\nplease enter a valid task number\n");
     }
   } while (user_choice > count || user_choice <= 0);
 
   if (list->num == user_choice) {
   list->status = 1;
-  printf("updated %d task to completed.\n",user_choice);
+  printf("\nupdated %d task to completed.\n",user_choice);
     return;
   }
 
@@ -206,11 +206,11 @@ void update_status(node *list) {
   }
 
   if (chad == NULL) {
-    printf("%d task not found.\n",user_choice);
+    printf("\n%d task not found.\n",user_choice);
     return;
   }
 
   chad->status = 1;
-  printf("updated %d task to completed.\n",user_choice);
+  printf("\nupdated %d task to completed.\n",user_choice);
 }
 
